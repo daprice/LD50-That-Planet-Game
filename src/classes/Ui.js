@@ -3,8 +3,11 @@ class Ui {
 		this.gameArea = document.querySelector('#game');
 	}
 	
-	addGraphic(graphicElement) {
-		this.gameArea.appendChild(graphicElement);
+	addGraphic(graphicObject, visible = true) {
+		if(visible) {
+			this.gameArea.appendChild(graphicObject.element);
+		}
+		graphicObject.parent = this.gameArea;
 	}
 }
 

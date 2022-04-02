@@ -6,7 +6,11 @@ class Game {
 		this.ui = new Ui();
 		this.planets = scenario.planets.map(planetData => {
 			let planet = new Planet(planetData);
-			this.ui.addGraphic(planet.graphic);
+			this.ui.addGraphic(planet);
+			this.ui.addGraphic(planet.popover, false);
+			planet.element.addEventListener('click', e => {
+				planet.popover.show();
+			});
 		});
 	}
 }

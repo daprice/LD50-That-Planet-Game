@@ -21,7 +21,11 @@ body {
 	background-color: var(--background-gray);
 }
 
-.ui-header {
+.ui * {
+	font-size: 1rem;
+}
+
+.ui-heading {
 	font-family: 'Optician Sans', ui-sans-serif, system-ui;
 }
 
@@ -36,6 +40,7 @@ body {
 }
 
 #game {
+	width: 100vmax;
 	max-width: 100vw;
 	max-height: 100vh;
 	max-height: 100dvh;

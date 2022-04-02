@@ -1,3 +1,5 @@
+import { Popover } from './Popover.js';
+
 class Planet {
 	constructor({name, x, y, size=7, population}) {
 		this.name = name;
@@ -5,7 +7,8 @@ class Planet {
 		this.y = y;
 		this.size = size;
 		this.population = population;
-		this.graphic = this.createGraphic();
+		this.element = this.createGraphic();
+		this.popover = this.createPopover();
 	}
 	
 	createGraphic() {
@@ -16,6 +19,16 @@ class Planet {
 		circle.setAttributeNS(null, 'r', this.size);
 		graphicElement.appendChild(circle);
 		return graphicElement;
+	}
+	
+	createPopover() {
+		const popover = new Popover({x: this.x, y: this.y + 10});
+		popover.contentDiv.classList.add('ui');
+		const popoverContent = document.createElement('h2');
+		popoverContent.classList.add('ui-heading');
+		popoverContent.textContent = this.name;
+		popover.contentDiv.appendChild(popoverContent);
+		return popover;
 	}
 };
 
