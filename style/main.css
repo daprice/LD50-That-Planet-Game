@@ -1,0 +1,26 @@
+@import url("fonts/Manifont-Grotesk/manifont-grotesk.css");
+@import url("fonts/optician-sans/optician-sans.css");
+@import url("fonts/Snap-It-Mono/snap-it-mono.css");
+
+html {
+	--foreground-gray: rgb(185, 185, 185);
+	--foreground-color: rgb(162, 229, 162);
+	
+	color: var(--foreground-gray);
+	background-color: rgb(24, 0, 78);
+	background-color: color(display-p3 0.084 0 0.293);
+}
+
+.ui-header {
+	font-family: 'Optician Sans', ui-sans-serif, system-ui;
+}
+
+.ui-text {
+	font-family: 'Snap-It Mono', ui-monospace, monospace;
+	letter-spacing: 0.05em;
+}
+
+.text-content {
+	font-family: 'Manifont Grotesk', ui-sans-serif, system-ui;
+	letter-spacing: 0.05em;
+}

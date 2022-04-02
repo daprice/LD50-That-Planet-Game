@@ -1,0 +1,27 @@
+@font-face {
+	font-family: 'Manifont Grotesk';
+	src: url('ManifontGroteskBold-webfonts/ManifontGroteskBold-webfont.woff') format('woff');
+	font-weight: bold;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Manifont Grotesk';
+	src: url('ManifontGroteskBoldItalic-webfonts/ManifontGroteskBoldItalic-webfont.woff') format('woff');
+	font-weight: bold;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: 'Manifont Grotesk';
+	src: url('ManifontGroteskBook-webfonts/ManifontGroteskBook-webfont.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Manifont Grotesk';
+	src: url('ManifontGroteskBookItalic-webfonts/ManifontGroteskBookItalic-webfont.woff') format('woff');
+	font-weight: normal;
+	font-style: italic;
+}
