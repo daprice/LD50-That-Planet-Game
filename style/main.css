@@ -3,13 +3,14 @@
 @import url("fonts/Snap-It-Mono/snap-it-mono.css");
 
 html {
+	--background-space: rgb(24, 0, 78);
+	--background-space: color(display-p3 0.084 0 0.293);
 	--background-gray: #335;
 	--foreground-gray: rgb(233, 233, 233);
 	--foreground-color: rgb(162, 229, 162);
 	
 	color: var(--foreground-gray);
-	background-color: rgb(24, 0, 78);
-	background-color: color(display-p3 0.084 0 0.293);
+	background-color: var(--background-space);
 }
 
 body {
@@ -17,9 +18,14 @@ body {
 	padding: 0px;
 }
 
+.popoverContainer {
+	padding: 10px;
+}
+
 .popover {
 	padding: 0.5rem;
 	border-radius: 0.5rem;
+	box-shadow: 0px 0px 4px 4px var(--background-space);
 }
 
 .popover-close {
@@ -37,6 +43,7 @@ body {
 .ui th {
 	text-align: left;
 	font-weight: normal;
+	white-space: nowrap;
 }
 
 .ui td {

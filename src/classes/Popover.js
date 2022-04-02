@@ -19,6 +19,7 @@ class Popover {
 	
 	createGraphic() {
 		const popoverElement = document.createElementNS('http://www.w3.org/2000/svg', 'foreignObject');
+		popoverElement.classList.add('popoverContainer');
 		popoverElement.setAttributeNS(null, 'x', this.x);
 		popoverElement.setAttributeNS(null, 'y', this.y + 10);
 		popoverElement.setAttributeNS(null, 'width', this.width);

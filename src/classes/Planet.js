@@ -34,7 +34,7 @@ class Planet {
 	}
 	
 	createPopover() {
-		const popover = new Popover({x: this.x - (250/2), y: this.y + this.size + 5, width: 250, height: 400});
+		const popover = new Popover({x: this.x - (280/2), y: this.y + this.size, width: 280, height: 400});
 		popover.contentDiv.classList.add('ui','popover');
 		
 		const heading = document.createElement('h2');
