@@ -1,0 +1,14 @@
+{
+  "clips" : [
+    {
+      "content" : "createElementNS('http:\/\/www.w3.org\/2000\/svg', $0);",
+      "name" : "createSVGElement",
+      "scope" : "editor",
+      "syntax" : "javascript"
+    },
+    {
+      "content" : "setAttributeNS(null, ${:attribute}, ${:value})",
+      "name" : "setAttributeSVG"
+    }
+  ]
+}
