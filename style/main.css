@@ -26,6 +26,7 @@ body {
 	padding: 0.5rem;
 	border-radius: 0.5rem;
 	box-shadow: 0px 0px 4px 4px var(--background-space);
+	background: linear-gradient(160deg, var(--background-gray), var(--background-space));
 }
 
 .popover-close {
