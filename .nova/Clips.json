@@ -9,6 +9,19 @@
     {
       "content" : "setAttributeNS(null, ${:attribute}, ${:value})",
       "name" : "setAttributeSVG"
+    },
+    {
+      "children" : [
+        {
+          "content" : "{\n\tname: ${:string},\n\tx: ${:x coord},\n\ty: ${:y coord},\n\tsize: ${:pixels},\n\tresources: ${:resources block},\n},",
+          "name" : "planet"
+        }
+      ],
+      "name" : "scenario"
+    },
+    {
+      "content" : "{\n\tpopulation: ${:population},\n\toxygen: ${:percent},\n\tco2: ${:percent},\n\twater: ${:percent},\n\ttoxins: ${:percent},\n\tearthPlants: ${:percent},\n\tcentauriPlants: ${:percent},\n\trossPlants: ${:percent},\n},",
+      "name" : "planetary resources block"
     }
   ]
 }
