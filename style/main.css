@@ -1,5 +1,5 @@
 @import url("fonts/Manifont-Grotesk/manifont-grotesk.css");
-@import url("fonts/optician-sans/optician-sans.css");
+@import url("fonts/virgo01_regular_macroman/stylesheet.css");
 @import url("fonts/Snap-It-Mono/snap-it-mono.css");
 
 html {
@@ -44,11 +44,13 @@ body {
 	text-align: left;
 	font-weight: normal;
 	white-space: nowrap;
+	padding: 0px;
 }
 
 .ui td {
 	text-align: right;
 	font-weight: bold;
+	padding: 0px;
 }
 
 .ui-button {
@@ -70,11 +72,13 @@ body {
 }
 
 .ui-heading {
-	font-family: 'Optician Sans', ui-sans-serif, system-ui;
-	font-size: 1.4em;
+	font-family: 'virgo_01', ui-sans-serif, system-ui;
+	font-size: 1.6em;
 	margin: 0px;
-	padding-top: 0.2rem;
-	padding-bottom: 0.2rem;
+	padding-top: 0.1rem;
+	padding-bottom: 0.1rem;
+	color: #ccd;
+	text-shadow: 1px 1px 0px black, 2px 2px 0px rgba(255,255,255, 0.3);
 }
 
 .ui-text {
