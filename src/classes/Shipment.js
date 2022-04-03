@@ -26,6 +26,10 @@ class Shipment {
 		// TODO: take the resources to be shipped away from the source planet if necessary
 	}
 	
+	updateSim() {
+		// TODO: progress the shipment
+	}
+	
 	createGraphic() {
 		console.error('lol unimplemented');
 	}

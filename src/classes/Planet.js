@@ -67,6 +67,11 @@ class Planet {
 		return graphicElement;
 	}
 	
+	updateSim() {
+		// TODO: advance ecosystem
+		// TODO: set launch button availability
+	}
+	
 	updateGraphic() {
 		this.earthLayer.setAttributeNS(null, 'opacity', this.resources.earthPlants);
 		this.rossLayer.setAttributeNS(null, 'opacity', this.resources.rossPlants);

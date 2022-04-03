@@ -78,15 +78,20 @@ class Game {
 	
 	simulationTick() {
 		this.gameState.increment();
+		console.group/*Collapsed*/(`${this.gameState.year} ${this.gameState.month}`);
 		
-		// update graphics
+		// update graphics and simulation
 		this.ui.updateDateDisplay(this.gameState);
 		for(const planet of this.planets) {
+			planet.updateSim();
 			planet.updateGraphic();
 		}
 		for(const shipment of this.shipments) {
+			shipment.updateSim();
 			shipment.updateGraphic();
 		}
+		
+		console.groupEnd();
 		
 		// trigger save
 		if(this.gameState.month === 12 && this.autosaveTriggerCallback !== undefined) {
