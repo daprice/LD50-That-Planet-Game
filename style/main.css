@@ -13,6 +13,10 @@ html {
 	background-color: var(--background-space);
 }
 
+text {
+	fill: var(--foreground-gray);
+}
+
 body {
 	margin: 0px;
 	padding: 0px;
@@ -95,6 +99,7 @@ body {
 	padding-top: 0.1rem;
 	padding-bottom: 0.1rem;
 	color: #ccd;
+	fill: #ccd;
 	text-shadow: 1px 1px 0px black, 2px 2px 0px rgba(255,255,255, 0.3);
 }
 
@@ -103,20 +108,28 @@ body {
 	letter-spacing: 0.05em;
 }
 
+.centeredText {
+	text-align: center;
+}
+
 .insufficientResource {
 	color: #766;
+	fill: #766;
 }
 
 .sufficientOxygen {
 	color: #bbf;
+	fill: #bbf;
 }
 
 .safeResource {
 	color: #1f4;
+	fill: #1f4;
 }
 
 .warnResource {
 	color: #d90;
+	fill: #d90;
 	animation: 0.25s linear 0s infinite alternate running warning-flash;
 }
 @keyframes warning-flash {

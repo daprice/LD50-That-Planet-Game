@@ -2,6 +2,7 @@ import { scenario } from './scenario/scenario.js';
 import { Game } from './classes/Game.js';
 
 let theGame = new Game(scenario);
+theGame.resume();
 
 function save() {
 	const state = JSON.stringify(theGame.getSaveState());
@@ -12,4 +13,5 @@ function load() {
 	theGame.pause();
 	const state = JSON.parse(window.localStorage.getItem('planetGameSave'));
 	theGame = new Game(state);
+	theGame.resume();
 }
