@@ -13,6 +13,19 @@ class Planet {
 	
 	resources
 	
+	baseLayer
+	earthLayer
+	rossLayer
+	centauriLayer
+	water1Layer
+	water2Layer
+	toxinsLayer
+	cloudLayer
+	co2Layer
+	nightLayer
+	cities1Layer
+	cities2Layer
+	
 	constructor({name, x, y, size=7, resources}) {
 		this.name = name;
 		this.x = x;
@@ -24,17 +37,77 @@ class Planet {
 	}
 	
 	createGraphic() {
+		const xPos = this.x - this.size/2;
+		const yPos = this.y - this.size/2;
+		const width = this.size;
+		const height = this.size;
 		const graphicElement = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-		const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-		circle.setAttributeNS(null, 'cx', this.x);
-		circle.setAttributeNS(null, 'cy', this.y);
-		circle.setAttributeNS(null, 'r', this.size);
-		graphicElement.appendChild(circle);
+		
+		this.baseLayer = Planet.imageLayer(xPos, yPos, width, height, 'assets/Planet/Barren.svg');
+		this.earthLayer = Planet.imageLayer(xPos, yPos, width, height, 'assets/Planet/Earth.svg');
+		this.rossLayer = Planet.imageLayer(xPos, yPos, width, height, 'assets/Planet/Ross.svg');
+		this.centauriLayer = Planet.imageLayer(xPos, yPos, width, height, 'assets/Planet/Centauri.svg');
+		this.water1Layer = Planet.imageLayer(xPos, yPos, width, height, 'assets/Planet/Water 1.svg');
+		this.water2Layer = Planet.imageLayer(xPos, yPos, width, height, 'assets/Planet/Water 2.svg');
+		this.toxinsLayer = Planet.imageLayer(xPos, yPos, width, height, 'assets/Planet/Toxins.svg');
+		this.cloudLayer = Planet.imageLayer(xPos, yPos, width, height, 'assets/Planet/Clouds.svg');
+		this.co2Layer = Planet.imageLayer(xPos, yPos, width, height, 'assets/Planet/CO2 clouds.svg');
+		this.nightLayer = Planet.imageLayer(xPos, yPos, width, height, 'assets/Planet/Night.svg');
+		this.cities1Layer = Planet.imageLayer(xPos, yPos, width, height, 'assets/Planet/Cities 1.svg');
+		this.cities2Layer = Planet.imageLayer(xPos, yPos, width, height, 'assets/Planet/Cities 2.svg');
+		
+		graphicElement.append(this.baseLayer, this.earthLayer, this.rossLayer, this.centauriLayer, this.water1Layer, this.water2Layer, this.toxinsLayer, this.cloudLayer, this.co2Layer, this.nightLayer, this.cities1Layer, this.cities2Layer);
+		this.updateGraphic();
+		
 		return graphicElement;
 	}
 	
+	updateGraphic() {
+		this.earthLayer.setAttributeNS(null, 'opacity', this.resources.earthPlants);
+		this.rossLayer.setAttributeNS(null, 'opacity', this.resources.rossPlants);
+		this.centauriLayer.setAttributeNS(null, 'opacity', this.resources.centauriPlants);
+		let water1;
+		let water2;
+		if(this.resources.water > 0.5) {
+			water1 = 1;
+			water2 = this.resources.water;
+		} else {
+			water1 = this.resources.water * 2;
+			water2 = 0;
+		}
+		this.water1Layer.setAttributeNS(null, 'opacity', water1);
+		this.water2Layer.setAttributeNS(null, 'opacity', water2);
+		this.toxinsLayer.setAttributeNS(null, 'opacity', Math.min(1, this.resources.toxins * 10));
+		this.cloudLayer.setAttributeNS(null, 'opacity', Math.min(1, this.resources.oxygen * 4));
+		this.co2Layer.setAttributeNS(null, 'opacity', Math.min(1, this.resources.co2 * 10));
+		let pop1;
+		let pop2;
+		if(this.resources.population > 100000000) {
+			pop1 = 1;
+			pop2 = 1;
+		} else if(this.resources.population > 100000) {
+			pop1 = 1;
+			pop2 = 0;
+		} else {
+			pop1 = 0;
+			pop2 = 0;
+		}
+		this.cities1Layer.setAttributeNS(null, 'opacity', pop1);
+		this.cities2Layer.setAttributeNS(null, 'opacity', pop2);
+	}
+	
+	static imageLayer(x, y, width, height, url) {
+		const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+		image.setAttributeNS(null, 'x', x);
+		image.setAttributeNS(null, 'y', y);
+		image.setAttributeNS(null, 'width', width);
+		image.setAttributeNS(null, 'height', height);
+		image.setAttributeNS(null, 'href', url);
+		return image;
+	}
+	
 	createPopover() {
-		const popover = new Popover({x: this.x - (280/2), y: this.y + this.size, width: 280, height: 400});
+		const popover = new Popover({x: this.x - (280/2), y: this.y + this.size/2, width: 280, height: 400});
 		popover.contentDiv.classList.add('ui','popover');
 		
 		const heading = document.createElement('h2');

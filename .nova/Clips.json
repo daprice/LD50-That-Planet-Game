@@ -20,7 +20,7 @@
       "name" : "scenario"
     },
     {
-      "content" : "{\n\tpopulation: ${:population},\n\toxygen: ${:percent},\n\tco2: ${:percent},\n\twater: ${:percent},\n\ttoxins: ${:percent},\n\tearthPlants: ${:percent},\n\tcentauriPlants: ${:percent},\n\trossPlants: ${:percent},\n},",
+      "content" : "{\n\tpopulation: ${:population},\n\toxygen: ${:percent},\n\tco2: ${:percent},\n\twater: ${:percent},\n\ttoxins: ${:percent},\n\tearthPlants: ${:percent},\n\tcentauriPlants: ${:percent},\n\trossPlants: ${:percent},\n}",
       "name" : "planetary resources block"
     }
   ]
