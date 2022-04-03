@@ -43,6 +43,10 @@ class Planet {
 		const height = this.size;
 		const graphicElement = document.createElementNS('http://www.w3.org/2000/svg', 'g');
 		
+		const titleElement = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+		titleElement.textContent = this.name;
+		graphicElement.appendChild(titleElement);
+		
 		this.baseLayer = Planet.imageLayer(xPos, yPos, width, height, 'assets/Planet/Barren.svg');
 		this.earthLayer = Planet.imageLayer(xPos, yPos, width, height, 'assets/Planet/Earth.svg');
 		this.rossLayer = Planet.imageLayer(xPos, yPos, width, height, 'assets/Planet/Ross.svg');
