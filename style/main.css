@@ -89,6 +89,7 @@ body {
 	cursor: pointer;
 	border-radius: 1px;
 	transition: background-color 0.15s ease-out;
+	font-size: 0.8rem;
 }
 
 .ui-button:hover {
