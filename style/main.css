@@ -26,7 +26,7 @@ body {
 	font-variant: tabular-nums;
 }
 
-.ui * {
+.ui, .ui * {
 	-webkit-user-select: none;
 	-webkit-touch-callout: none;
 	-moz-user-select: none;
