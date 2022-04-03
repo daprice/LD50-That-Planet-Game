@@ -81,15 +81,17 @@ class Game {
 		console.group/*Collapsed*/(`${this.gameState.year} ${this.gameState.month}`);
 		
 		// update graphics and simulation
+		const simMessages = [];
 		this.ui.updateDateDisplay(this.gameState);
 		for(const planet of this.planets) {
-			planet.updateSim();
+			simMessages.push(...planet.updateSim());
 			planet.updateGraphic();
 		}
 		for(const shipment of this.shipments) {
 			shipment.updateSim();
 			shipment.updateGraphic();
 		}
+		console.log(simMessages);
 		
 		console.groupEnd();
 		

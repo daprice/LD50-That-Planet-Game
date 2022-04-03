@@ -31,10 +31,12 @@ class Shipment {
 	}
 	
 	createGraphic() {
+		// TODO: this
 		console.error('lol unimplemented');
 	}
 	
 	updateGraphic() {
+		// TODO: this
 		console.error('lol unimplemented');
 	}
 }

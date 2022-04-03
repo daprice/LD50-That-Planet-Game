@@ -12,7 +12,7 @@ const scenario = {
 			resources: {
 				population: 7000000000,
 				oxygen: 0.20,
-				co2: 0.05,
+				co2: 0.0005,
 				water: 0.80,
 				toxins: 0.02,
 				earthPlants: 0.8,

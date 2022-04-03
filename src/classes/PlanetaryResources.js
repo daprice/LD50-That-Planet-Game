@@ -8,8 +8,8 @@ class PlanetaryResources {
 	centauriPlants // converts toxins to water, req oxygen
 	rossPlants // converts toxins to co2, req water
 	
-	static popFormatter = new Intl.NumberFormat(undefined, {signDisplay: 'never', maximumFractionDigits: 0, notation: 'compact', compactDisplay: 'short'});
-	static percentFormatter = new Intl.NumberFormat(undefined, {style: 'percent', maximumFractionDigits: 0, signDisplay: 'never'});
+	static popFormatter = new Intl.NumberFormat(undefined, {signDisplay: 'never', notation: 'compact', compactDisplay: 'short'});
+	static percentFormatter = new Intl.NumberFormat(undefined, {style: 'percent', maximumFractionDigits: 2, maximumSignificantDigits: 2, signDisplay: 'never'});
 	
 	constructor({population=0, oxygen=0, co2=0, water=0, toxins=0, earthPlants=0, centauriPlants=0, rossPlants=0}) {
 		this.population = population;
@@ -31,9 +31,9 @@ class PlanetaryResources {
 			popover.oxyCell.className = 'insufficientResource';
 		}
 		popover.co2Cell.textContent = this.constructor.percentFormatter.format(this.co2);
-		if (this.co2 < 0.05) {
+		if (this.co2 < 0.0005) {
 			popover.co2Cell.className = 'safeResource';
-		} else if (this.co2 < 0.07) {
+		} else if (this.co2 < 0.0007) {
 			popover.co2Cell.className = 'warnResource';
 		} else {
 			popover.co2Cell.className = 'unsafeResource';
@@ -68,6 +68,10 @@ class PlanetaryResources {
 			popover.plantsCell.textContent = 'Mixed';
 			popover.plantsCell.className = '';
 		}
+	}
+	
+	getAllPlantsTotal() {
+		return Math.min(this.earthPlants + this.centauriPlants + this.rossPlants);
 	}
 }
 

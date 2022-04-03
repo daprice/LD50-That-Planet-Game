@@ -68,8 +68,72 @@ class Planet {
 	}
 	
 	updateSim() {
-		// TODO: advance ecosystem
-		// TODO: set launch button availability
+		const simMessages = [];
+		
+		/* !advance ecosystem */
+		
+		// flora growth and effects
+		if(this.resources.earthPlants > 0) {
+			// growth/decline
+			if(this.resources.earthPlants < this.resources.water) {
+				this.resources.earthPlants += this.resources.earthPlants * 0.017; // double every 10 years or something like that, up to the water limit
+			} else if(this.resources.earthPlants > this.resources.water) {
+				if(this.resources.earthPlants * 0.9 > this.resources.water) {
+					simMessages.push(`Earth-like vegetation is dying off on ${this.name} due to lack of water!`);
+				}
+				this.resources.earthPlants -= 0.05; // lose 5% of possible plant population if there isn't enough water
+			}
+			this.resources.earthPlants = Math.min(1, Math.max(0, this.resources.earthPlants)); // keep within 0-1 range
+			
+			// effects
+			// co2 -> o2
+			const maxCo2Reduction = this.resources.earthPlants * 0.0001 / 120; // decrease by up to .01% every 10 years
+			const actualCo2Reduction = Math.min(this.resources.co2, maxCo2Reduction);
+			this.resources.co2 -= actualCo2Reduction;
+			this.resources.oxygen += actualCo2Reduction;
+			this.resources.oxygen = Math.min(1, this.resources.oxygen);
+		}
+		
+		// population effects
+		if(this.resources.population > 0) {
+			// pop growth/decline
+			const popRatio = Math.min(1, this.resources.population / 100000000); // fraction of one hundred million people which would be considered a "full" society
+			const foodRatio = Math.min(1, this.resources.getAllPlantsTotal() * 1.25);
+			const foodShortage = popRatio - foodRatio;
+			// food shortage reduces population gradually: 1/20 of the unfed people go away each month
+			// food surplus helps population increase faster than normal
+			if(foodShortage > 0) {
+				simMessages.push(`Food shortage on ${this.name}`);
+				this.resources.population -= this.resources.population * foodShortage / 20;
+			} else {
+				this.resources.population += this.resources.population * (0.01/12 + (-foodShortage) * 0.05/12);
+			}
+			
+			// insufficient oxygen quickly reduces population
+			const oxygenShortage = 0.15 - this.resources.oxygen;
+			if (oxygenShortage > 0) {
+				simMessages.push(`${this.name} lacks sufficient oxygen for the survival of its population!`);
+				this.resources.population -= this.resources.population * 0.5;
+			}
+			
+			// too much CO2 reduces population
+			const co2Excess = (this.resources.co2 - 0.0005) / 0.0005;
+			if(co2Excess > 0) {
+				simMessages.push(`Unhealthy carbon dioxide levels on ${this.name}!`);
+				this.resources.population -= this.resources.population * 0.1 * co2Excess;
+			}
+			
+			// too many toxins reduce population slowly
+			this.resources.population -= this.resources.population * this.resources.toxins / 12;
+			
+			// effects of population on planet
+			// co2
+			this.resources.co2 += this.resources.population / 1000000000 * 0.0001 / 240; // increase by .01% per billion per 20 years
+		}
+		
+		/* !TODO: set launch button availability */
+		
+		return simMessages;
 	}
 	
 	updateGraphic() {
@@ -92,7 +156,7 @@ class Planet {
 		this.co2Layer.setAttributeNS(null, 'opacity', Math.min(1, this.resources.co2 * 10));
 		let pop1;
 		let pop2;
-		if(this.resources.population > 100000000) {
+		if(this.resources.population > 1000000000) {
 			pop1 = 1;
 			pop2 = 1;
 		} else if(this.resources.population > 100000) {
@@ -104,6 +168,9 @@ class Planet {
 		}
 		this.cities1Layer.setAttributeNS(null, 'opacity', pop1);
 		this.cities2Layer.setAttributeNS(null, 'opacity', pop2);
+		if(this.popover !== undefined) {
+			this.resources.updatePopover(this.popover);
+		}
 	}
 	
 	static imageLayer(x, y, width, height, url) {
