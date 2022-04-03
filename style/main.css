@@ -23,7 +23,7 @@ body {
 }
 
 .ui {
-	
+	font-variant: tabular-nums;
 }
 
 .ui * {
