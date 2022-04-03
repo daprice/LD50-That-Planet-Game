@@ -21,15 +21,28 @@ class Game {
 			});
 			return planet;
 		});
+		this.ui.playPauseButton.addEventListener('click', e => this.togglePause());
+	}
+	
+	togglePause() {
+		if(this.tickInterval === undefined) {
+			this.resume();
+		} else {
+			this.pause();
+		}
 	}
 	
 	pause() {
 		clearInterval(this.tickInterval);
 		this.tickInterval = undefined;
+		this.ui.playPauseButton.textContent = '▶︎';
+		this.ui.playPauseButton.title = 'Play';
 	}
 	
 	resume() {
 		this.tickInterval = setInterval(this.simulationTick.bind(this), 1000);
+		this.ui.playPauseButton.textContent = '❚ ❚';
+		this.ui.playPauseButton.title = 'Pause';
 	}
 	
 	simulationTick() {

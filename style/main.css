@@ -23,7 +23,7 @@ body {
 }
 
 .ui {
-	background-color: var(--background-gray);
+	
 }
 
 .ui * {
@@ -74,6 +74,14 @@ body {
 	padding: 0px;
 }
 
+.floating-button {
+	color: var(--foreground-gray);
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-weight: bold;
+}
+
 .ui-button {
 	background-color: #676;
 	color: #FFF;
@@ -110,6 +118,10 @@ body {
 
 .centeredText {
 	text-align: center;
+}
+
+.rightAlignedText {
+	text-align: right;
 }
 
 .insufficientResource {
