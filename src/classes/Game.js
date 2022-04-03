@@ -46,6 +46,7 @@ class Game {
 	}
 	
 	resume() {
+		this.simulationTick();
 		this.tickInterval = setInterval(this.simulationTick.bind(this), 1000);
 		this.ui.playPauseButton.textContent = '❚ ❚';
 		this.ui.playPauseButton.title = 'Pause';
