@@ -126,9 +126,20 @@ class Planet {
 			// too many toxins reduce population slowly
 			this.resources.population -= this.resources.population * this.resources.toxins / 12;
 			
+			// lack of water kills
+			if(this.resources.water === 0) {
+				simMessages.push(`${this.name} is uninhabitable due to lack of surface water!`);
+				this.resources.population -= Math.min(1000, this.resources.population * 0.8);
+			}
+			
+			this.resources.population = Math.max(0, Math.floor(this.resources.population));
+			
 			// effects of population on planet
 			// co2
 			this.resources.co2 += this.resources.population / 1000000000 * 0.0001 / 240; // increase by .01% per billion per 20 years
+			
+			// toxins
+			this.resources.toxins += this.resources.population / 1000000000 * 0.01 / 240;
 		}
 		
 		/* !TODO: set launch button availability */
