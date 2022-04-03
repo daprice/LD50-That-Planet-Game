@@ -69,6 +69,7 @@ const scenario = {
 			},
 		},
 	],
+	shipments: [],
 }
 
 export { scenario };

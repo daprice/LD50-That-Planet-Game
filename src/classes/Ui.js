@@ -2,6 +2,8 @@ class Ui {
 	gameArea
 	dateElement
 	playPauseButton
+	shipmentTargetingInterface
+	cancelShipmentButton
 	
 	static monthNames = ['Zeroary', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 	
@@ -9,6 +11,7 @@ class Ui {
 		this.gameArea = document.querySelector('#game');
 		this.gameArea.appendChild(this.createDateElements());
 		this.gameArea.appendChild(this.createPlayPauseButton());
+		this.shipmentTargetingInterface = this.createShipmentTargetingInterface();
 	}
 	
 	addGraphic(graphicObject, visible = true) {
@@ -47,6 +50,35 @@ class Ui {
 		div.appendChild(this.playPauseButton);
 		container.appendChild(div);
 		return container;
+	}
+	
+	createShipmentTargetingInterface() {
+		const container = document.createElementNS('http://www.w3.org/2000/svg', 'foreignObject');
+		container.setAttributeNS(null, 'x', 200);
+		container.setAttributeNS(null, 'y', 700);
+		container.setAttributeNS(null, 'width', 400);
+		container.setAttributeNS(null, 'height', 100);
+		const div = document.createElement('div');
+		div.classList.add('ui', 'centeredText');
+		const h1 = document.createElement('h1');
+		h1.classList.add('ui-heading');
+		h1.textContent = 'Choose a destination';
+		this.cancelShipmentButton = document.createElement('button');
+		this.cancelShipmentButton.classList.add('ui-button');
+		this.cancelShipmentButton.textContent = 'Cancel launch';
+		div.append(h1, this.cancelShipmentButton);
+		container.appendChild(div);
+		return container;
+	}
+	
+	beginShipmentTargeting() {
+		this.gameArea.appendChild(this.shipmentTargetingInterface);
+		this.gameArea.classList.add('targeting-mode');
+	}
+	
+	endShipmentTargeting() {
+		this.gameArea.removeChild(this.shipmentTargetingInterface);
+		this.gameArea.classList.remove('targeting-mode');
 	}
 }
 

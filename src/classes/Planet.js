@@ -10,6 +10,7 @@ class Planet {
 	element
 	
 	popover
+	shipmentRequestCallback
 	
 	resources
 	
@@ -166,7 +167,23 @@ class Planet {
 		plantsRow.append(plantsLabelCell, popover.plantsCell);
 		resourceTable.append(plantsRow);
 		
-		popover.contentDiv.append(popover.getCloseBox(), heading, resourceTable);
+		const shipPopsButton = document.createElement('button');
+		shipPopsButton.classList.add('ui-button');
+		shipPopsButton.textContent = 'Launch settlers';
+		shipPopsButton.addEventListener('click', e => {
+			this.shipmentRequestCallback({sourceName: this.name, passengers: 1000});
+		});
+		popover.shipPopsButton = shipPopsButton;
+				
+		const shipSeedsButton = document.createElement('button');
+		shipSeedsButton.classList.add('ui-button');
+		shipSeedsButton.textContent = 'Launch seeds';
+		shipSeedsButton.addEventListener('click', e => {
+			this.shipmentRequestCallback({sourceName: this.name, earthSeeds: this.earthPlants, centauriSeeds: this.centauriPlants, rossSeeds: this.rossPlants});
+		});
+		popover.shipSeedsButton = shipSeedsButton;
+		
+		popover.contentDiv.append(popover.getCloseBox(), heading, resourceTable, shipPopsButton, shipSeedsButton);
 		this.resources.updatePopover(popover);
 		
 		return popover;

@@ -1,13 +1,18 @@
 import { GameState } from './GameState.js';
 import { Planet } from './Planet.js';
+import { Shipment } from './Shipment.js';
 import { Ui } from './Ui.js';
 
 class Game {
 	ui
 	gameState
 	planets
+	shipments
 	tickInterval
 	autosaveTriggerCallback
+	pausedBeforeShipmentTargeting = false
+	shipmentTargetingMode = false
+	shipmentTargetingOptions
 	
 	constructor(scenario) {
 		this.ui = new Ui();
@@ -18,9 +23,21 @@ class Game {
 			this.ui.addGraphic(planet.popover, false);
 			planet.element.classList.add('clickable');
 			planet.element.addEventListener('click', e => {
-				planet.popover.show();
+				if(this.shipmentTargetingMode === true && this.shipmentTargetingOptions.sourceName !== planet.name) {
+					this.shipmentTargeted(planet.name);
+				} else {
+					planet.popover.show();
+				}
 			});
+			planet.shipmentRequestCallback = shipmentOptions => {
+				this.shipmentRequest(shipmentOptions);
+			};
 			return planet;
+		});
+		this.shipments = scenario.shipments.map(shipmentData => {
+			let shipment = new Shipment(shipmentData, this);
+			this.ui.addGraphic(shipment);
+			return shipment;
 		});
 		this.ui.playPauseButton.addEventListener('click', e => this.togglePause());
 		document.addEventListener('keyup', e => {
@@ -30,6 +47,7 @@ class Game {
 				return false;
 			}
 		});
+		this.ui.cancelShipmentButton.addEventListener('click', e => this.shipmentCanceled());
 	}
 	
 	togglePause() {
@@ -48,6 +66,10 @@ class Game {
 	}
 	
 	resume() {
+		if(this.shipmentTargetingMode === true) {
+			console.log('cant unpause because of shipment targeting mode')
+			return;
+		}
 		this.simulationTick();
 		this.tickInterval = setInterval(this.simulationTick.bind(this), 1000);
 		this.ui.playPauseButton.textContent = '❚ ❚';
@@ -56,14 +78,54 @@ class Game {
 	
 	simulationTick() {
 		this.gameState.increment();
+		
+		// update graphics
 		this.ui.updateDateDisplay(this.gameState);
 		for(const planet of this.planets) {
 			planet.updateGraphic();
+		}
+		for(const shipment of this.shipments) {
+			shipment.updateGraphic();
 		}
 		
 		// trigger save
 		if(this.gameState.month === 12 && this.autosaveTriggerCallback !== undefined) {
 			this.autosaveTriggerCallback();
+		}
+	}
+	
+	shipmentRequest(shipmentOptions) {
+		this.pausedBeforeShipmentTargeting = (this.tickInterval === undefined);
+		this.pause();
+		this.shipmentTargetingOptions = shipmentOptions;
+		this.shipmentTargetingMode = true;
+		this.ui.beginShipmentTargeting();
+	}
+	
+	shipmentTargeted(destinationName) {
+		this.shipmentTargetingOptions.destinationName = destinationName;
+		const shipment = new Shipment(this.shipmentTargetingOptions, this);
+		shipment.loadUpShipment();
+		this.shipmentTargetingMode = false;
+		this.shipmentTargetingOptions = undefined;
+		this.ui.endShipmentTargeting();
+		this.shipmentAdded(shipment);
+		if(!this.pausedBeforeShipmentTargeting) {
+			this.resume();
+		}
+	}
+	
+	shipmentAdded(shipment) {
+		this.shipments.push(shipment);
+		this.ui.addGraphic(shipment);
+	}
+	
+	shipmentCanceled() {
+		this.ui.endShipmentTargeting();
+		this.shipmentTargetingMode = false;
+		this.shipmentTargetingOptions = undefined;
+		if(!this.pausedBeforeShipmentTargeting) {
+			this.resume();
 		}
 	}
 	
@@ -81,6 +143,17 @@ class Game {
 				size: planet.size,
 				resources: planet.resources,
 			};
+		});
+		saveState.shipments = this.shipments.map(shipment => {
+			return {
+				passengers: shipment.passengers,
+				earthSeeds: shipment.earthSeeds,
+				centauriSeeds: shipment.centauriSeeds,
+				rossSeeds: shipment.rossSeeds,
+				sourceName: shipment.sourceName,
+				destinationName: shipment.destinationName,
+				progress: shipment.progress,
+			}
 		});
 		saveState.timestamp = Date.now();
 		return saveState;
