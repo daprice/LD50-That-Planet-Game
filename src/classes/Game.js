@@ -22,6 +22,12 @@ class Game {
 			return planet;
 		});
 		this.ui.playPauseButton.addEventListener('click', e => this.togglePause());
+		document.addEventListener('keyup', e => {
+			if(e.key === ' ') {
+				e.preventDefault();
+				this.togglePause();
+			}
+		});
 	}
 	
 	togglePause() {
