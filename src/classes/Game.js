@@ -8,6 +8,7 @@ class Game {
 			let planet = new Planet(planetData);
 			this.ui.addGraphic(planet);
 			this.ui.addGraphic(planet.popover, false);
+			planet.element.classList.add('clickable');
 			planet.element.addEventListener('click', e => {
 				planet.popover.show();
 			});
