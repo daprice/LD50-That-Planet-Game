@@ -8,15 +8,17 @@
 		<script src="src/main.js" defer type="module"></script>
 	</head>
 	<body>
-		<!-- <section class="text-content">
-			<h1>Text heading</h1>
-			<p>Testing <strong>strong</strong> <em>emphasis</em> 1, 2, 3</p>
-		</section>
-		<section class="ui">
-			<h2 class="ui-header">UI heading</h2>
-			<p class="ui-text">Ui label</p>
-		</section> -->
-		
+		<dialog id="continueSaveDialog" class="text-content">
+			<h1>Load game?</h1>
+			<p>You last played on <span class="saveDate"></span>. Would you like to continue your game or start over?</p>
+			<button class="ui-button" id="revertSave">Discard saved game and start over</button>
+			<button class="ui-button" id="loadSave">Continue from saved game</button>
+		</dialog>
+		<dialog id="loadErrorDialog" class="text-content">
+			<h1>Error loading saved game</h1>
+			<p>Your save file couldn't be loaded.</p>
+			<button class="ui-button" id="newGameFromError">New game</button>
+		</dialog>
 		<svg id="game" viewBox="0 0 800 800" width="800" height="800">
 		</svg>
 	</body>

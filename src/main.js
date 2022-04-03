@@ -1,17 +1,19 @@
 import { scenario } from './scenario/scenario.js';
 import { Game } from './classes/Game.js';
+import { SaveManager } from './classes/SaveManager.js';
 
-let theGame = new Game(scenario);
-theGame.resume();
+let theGame;
 
-function save() {
-	const state = JSON.stringify(theGame.getSaveState());
-	window.localStorage.setItem('planetGameSave', state);
-}
-
-function load() {
-	theGame.pause();
-	const state = JSON.parse(window.localStorage.getItem('planetGameSave'));
-	theGame = new Game(state);
+const saveManager = new SaveManager('planetGameSave');
+saveManager.loadCallback = data => {
+	theGame = new Game(data);
 	theGame.resume();
-}
+	theGame.autosaveTriggerCallback = () => { saveManager.save(theGame.getSaveState()) };
+};
+saveManager.startNewCallback = () => {
+	theGame = new Game(scenario);
+	theGame.resume();
+	theGame.autosaveTriggerCallback = () => { saveManager.save(theGame.getSaveState()) };
+};
+
+saveManager.checkAndPrompt();

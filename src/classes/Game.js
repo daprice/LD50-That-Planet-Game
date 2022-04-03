@@ -7,6 +7,7 @@ class Game {
 	gameState
 	planets
 	tickInterval
+	autosaveTriggerCallback
 	
 	constructor(scenario) {
 		this.ui = new Ui();
@@ -26,6 +27,7 @@ class Game {
 			if(e.key === ' ') {
 				e.preventDefault();
 				this.togglePause();
+				return false;
 			}
 		});
 	}
@@ -58,6 +60,11 @@ class Game {
 		for(const planet of this.planets) {
 			planet.updateGraphic();
 		}
+		
+		// trigger save
+		if(this.gameState.month === 12 && this.autosaveTriggerCallback !== undefined) {
+			this.autosaveTriggerCallback();
+		}
 	}
 	
 	getSaveState() {
@@ -75,6 +82,7 @@ class Game {
 				resources: planet.resources,
 			};
 		});
+		saveState.timestamp = Date.now();
 		return saveState;
 	}
 }
