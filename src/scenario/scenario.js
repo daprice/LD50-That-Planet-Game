@@ -1,7 +1,7 @@
 const scenario = {
 	gameState: {
 		year: 2082,
-		month: 1,	
+		month: 0,	
 	},
 	planets: [
 		{
