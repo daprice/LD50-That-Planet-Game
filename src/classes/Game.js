@@ -165,6 +165,10 @@ class Game {
 		saveState.timestamp = Date.now();
 		return saveState;
 	}
+	
+	getPlanetByName(name) {
+		return this.planets.find(planet => planet.name === name);
+	}
 }
 
 export { Game };
