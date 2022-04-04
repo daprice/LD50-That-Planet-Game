@@ -10,11 +10,13 @@ class Ui {
 	eventLogCloseButton
 	shipmentTargetingInterface
 	cancelShipmentButton
+	lossDialog
 	
 	static monthNames = ['Zeroary', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 	
 	constructor(layers=3) {
 		this.gameArea = document.querySelector('#game');
+		this.gameArea.replaceChildren([]);
 		this.gameArea.appendChild(this.createDateElements());
 		this.gameArea.appendChild(this.createPlayPauseButton());
 		this.gameArea.appendChild(this.createEventLogButton());
@@ -26,6 +28,7 @@ class Ui {
 		}
 		this.eventLogDialog = document.querySelector('#eventLog');
 		this.eventLogCloseButton = document.querySelector('#closeEventLog');
+		this.lossDialog = document.querySelector('#lossDialog');
 	}
 	
 	addGraphic(graphicObject, visible = true, layerIndex = 1) {

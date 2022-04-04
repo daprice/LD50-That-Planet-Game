@@ -174,6 +174,10 @@ class Game {
 			}
 			this.eventLogger.addEvents(this.gameState.year, this.gameState.month, [`There are ${PlanetaryResources.longPopFormatter.format(totalPop)} of your species alive.`]);
 			console.log('census complete');
+			if (totalPop <= 0) {
+				this.pause();
+				this.ui.lossDialog.showModal();
+			}
 		}
 	}
 	
