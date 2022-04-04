@@ -11,6 +11,7 @@ class Planet {
 	
 	popover
 	shipmentRequestCallback
+	currentlyShipping = false
 	
 	resources
 	
@@ -190,17 +191,17 @@ class Planet {
 		}
 		
 		/* set launch button availability */
-		const launchAvailable = (this.resources.population >= 10000);
+		const launchAvailable = (this.resources.population >= 10000 && !this.currentlyShipping);
 		const seedLaunchAvailable = launchAvailable && this.resources.getAllPlantsTotal() > 0;
 		this.popover.shipPopsButton.disabled = !launchAvailable;
 		this.popover.shipSeedsButton.disabled = !seedLaunchAvailable;
 		if(!launchAvailable) {
-			this.popover.shipPopsButton.title = `Launch infrastructure on ${this.name} requires population of ${PlanetaryResources.popFormatter.format(10000)} or more`;
+			this.popover.shipPopsButton.title = this.currentlyShipping ? `Launch from ${this.name} is unavailable while a mission is already in progress` : `Launch infrastructure on ${this.name} requires population of ${PlanetaryResources.popFormatter.format(10000)} or more`;
 		} else {
 			this.popover.shipPopsButton.title = '';
 		}
 		if(!seedLaunchAvailable) {
-			this.popover.shipSeedsButton.title = `Launching seeds from ${this.name} requires a population of ${PlanetaryResources.popFormatter.format(10000)} or more and available flora`;
+			this.popover.shipSeedsButton.title = this.currentlyShipping ? `Launch from ${this.name} is unavailable while a mission is already in progress` : `Launching seeds from ${this.name} requires a population of ${PlanetaryResources.popFormatter.format(10000)} or more and available flora`;
 		} else {
 			this.popover.shipSeedsButton.title = '';
 		}

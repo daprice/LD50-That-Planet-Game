@@ -34,6 +34,10 @@ class Shipment {
 		this.distance = Math.sqrt(Math.pow(distX, 2) + Math.pow(distY, 2));
 		
 		this.element = this.createGraphic();
+		
+		if (this.progress < 1) {
+			this.sourcePlanet.currentlyShipping = true;
+		}
 	}
 	
 	loadUpShipment() {
@@ -41,6 +45,7 @@ class Shipment {
 	}
 	
 	finishShipment() {
+		this.sourcePlanet.currentlyShipping = false;
 		this.destinationPlanet.resources.population += this.passengers;
 		this.destinationPlanet.resources.earthPlants += this.earthSeeds;
 		this.destinationPlanet.resources.centauriPlants += this.centauriSeeds;
