@@ -246,3 +246,7 @@ body {
 	padding: 0px;
 	line-height: 1.5em;
 }
+
+dialog {
+	max-width: 90vw;
+}
