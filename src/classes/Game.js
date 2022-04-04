@@ -21,6 +21,8 @@ class Game {
 	eventLogger = new EventLog()
 	shipmentTargetingMode = false
 	shipmentTargetingOptions
+	centauriPlantsDiscovered = false
+	rossPlantsDiscovered = false
 	
 	constructor(scenario) {
 		this.ui = new Ui();
@@ -70,6 +72,14 @@ class Game {
 			this.openEventLog();
 		});
 		this.ui.eventLogCloseButton.addEventListener('click', e => this.closeEventLog());
+		this.ui.rossPlantDialogCloseButton.addEventListener('click', e => {
+			this.ui.rossPlantDialog.close();
+			this.resume();
+		});
+		this.ui.centauriPlantDialogCloseButton.addEventListener('click', e => {
+			this.ui.centauriPlantDialog.close();
+			this.resume();
+		});
 	}
 	
 	togglePause() {
@@ -150,6 +160,18 @@ class Game {
 		for(const planet of this.planets) {
 			simMessages.push(...planet.updateSim());
 			planet.updateGraphic();
+			
+			// check for plant discoveries
+			if(!this.rossPlantsDiscovered && planet.resources.population > 0 && planet.resources.rossPlants > 0) {
+				this.rossPlantsDiscovered = true;
+				this.pause();
+				this.ui.rossPlantDialog.showModal();
+			}
+			if(!this.centauriPlantsDiscovered && planet.resources.population > 0 && planet.resources.centauriPlants > 0) {
+				this.centauriPlantsDiscovered = true;
+				this.pause();
+				this.ui.centauriPlantDialog.showModal();
+			}
 		}
 		for(const shipment of this.shipments) {
 			simMessages.push(...shipment.updateSim());

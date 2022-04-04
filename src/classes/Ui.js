@@ -11,6 +11,10 @@ class Ui {
 	shipmentTargetingInterface
 	cancelShipmentButton
 	lossDialog
+	centauriPlantDialog
+	centauriPlantDialogCloseButton
+	rossPlantDialog
+	rossPlantDialogCloseButton
 	
 	static monthNames = ['Zeroary', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 	
@@ -29,6 +33,10 @@ class Ui {
 		this.eventLogDialog = document.querySelector('#eventLog');
 		this.eventLogCloseButton = document.querySelector('#closeEventLog');
 		this.lossDialog = document.querySelector('#lossDialog');
+		this.rossPlantDialog = document.querySelector('#rossPlantDialog');
+		this.rossPlantDialogCloseButton = document.querySelector('#closeRossPlantDialog');
+		this.centauriPlantDialog = document.querySelector('#centauriPlantDialog');
+		this.centauriPlantDialogCloseButton = document.querySelector('#closeCentauriPlantDialog');
 	}
 	
 	addGraphic(graphicObject, visible = true, layerIndex = 1) {
