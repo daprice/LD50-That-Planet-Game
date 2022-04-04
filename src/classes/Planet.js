@@ -164,7 +164,7 @@ class Planet {
 		this.water2Layer.setAttributeNS(null, 'opacity', water2);
 		this.toxinsLayer.setAttributeNS(null, 'opacity', Math.min(1, this.resources.toxins * 10));
 		this.cloudLayer.setAttributeNS(null, 'opacity', Math.min(1, this.resources.oxygen * 4));
-		this.co2Layer.setAttributeNS(null, 'opacity', Math.min(1, this.resources.co2 * 10));
+		this.co2Layer.setAttributeNS(null, 'opacity', Math.min(1, this.resources.co2 * 1000));
 		let pop1;
 		let pop2;
 		if(this.resources.population > 1000000000) {
