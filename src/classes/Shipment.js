@@ -10,6 +10,7 @@ class Shipment {
 	
 	element
 	parent
+	filledPath
 	
 	sourcePlanet
 	destinationPlanet
@@ -24,7 +25,6 @@ class Shipment {
 		this.destinationName = destinationName;
 		this.progress = progress;
 		this.gameWorld = gameWorld;
-		this.element = this.createGraphic();
 		
 		this.sourcePlanet = this.gameWorld.getPlanetByName(this.sourceName);
 		this.destinationPlanet = this.gameWorld.getPlanetByName(this.destinationName);
@@ -32,6 +32,8 @@ class Shipment {
 		const distX = this.destinationPlanet.x - this.sourcePlanet.x;
 		const distY = this.destinationPlanet.y - this.sourcePlanet.y;
 		this.distance = Math.sqrt(Math.pow(distX, 2) + Math.pow(distY, 2));
+		
+		this.element = this.createGraphic();
 	}
 	
 	loadUpShipment() {
@@ -43,30 +45,55 @@ class Shipment {
 		this.destinationPlanet.resources.earthPlants += this.earthSeeds;
 		this.destinationPlanet.resources.centauriPlants += this.centauriSeeds;
 		this.destinationPlanet.resources.rossPlants += this.rossSeeds;
-		this.parent.removeChild(this.element);
 	}
 	
 	updateSim() {
 		const simMessages = [];
 		
-		const movedDistance = 1;
-		this.progress += movedDistance / this.distance;
-		if(this.progress >= 1) {
-			this.finishShipment();
-			simMessages.push(`The starship from ${this.sourceName} has arrived at ${this.destinationName}`);
+		if(this.progress < 1) {
+			const movedDistance = 1;
+			this.progress += movedDistance / this.distance;
+			if(this.progress >= 1) {
+				this.progress = 1;
+				this.finishShipment();
+				simMessages.push(`The starship from ${this.sourceName} has arrived at ${this.destinationName}`);
+			}
 		}
 		
 		return simMessages;
 	}
 	
 	createGraphic() {
-		// TODO: this
-		console.error('lol unimplemented');
+		const container = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+		
+		const tracedPath = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+		tracedPath.setAttributeNS(null, 'x1', this.destinationPlanet.x);
+		tracedPath.setAttributeNS(null, 'y1', this.destinationPlanet.y);
+		tracedPath.setAttributeNS(null, 'x2', this.sourcePlanet.x);
+		tracedPath.setAttributeNS(null, 'y2', this.sourcePlanet.y);
+		tracedPath.classList.add('shipmentPath', 'tracedPath');
+		
+		const filledPath = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+		filledPath.setAttributeNS(null, 'x2', this.destinationPlanet.x);
+		filledPath.setAttributeNS(null, 'y2', this.destinationPlanet.y);
+		filledPath.setAttributeNS(null, 'x1', this.sourcePlanet.x);
+		filledPath.setAttributeNS(null, 'y1', this.sourcePlanet.y);
+		filledPath.classList.add('shipmentPath', 'filledPath');
+		filledPath.setAttributeNS(null, 'stroke-dasharray', `${this.distance} ${this.distance}`);
+		filledPath.setAttributeNS(null, 'stroke-dashoffset', this.distance - (this.distance * this.progress));
+		this.filledPath = filledPath;
+		
+		container.append(tracedPath, filledPath);
+		
+		return container;
 	}
 	
 	updateGraphic() {
-		// TODO: this
-		console.error('lol unimplemented');
+		this.filledPath.setAttributeNS(null, 'stroke-dashoffset', this.distance - (this.distance * this.progress));
+		
+		if (this.progress >= 1) {
+			this.element.setAttributeNS(null, 'opacity', 0);
+		}
 	}
 }
 

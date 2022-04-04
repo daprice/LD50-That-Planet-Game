@@ -88,7 +88,7 @@ class Game {
 			planet.updateGraphic();
 		}
 		for(const shipment of this.shipments) {
-			shipment.updateSim();
+			simMessages.push(...shipment.updateSim());
 			shipment.updateGraphic();
 		}
 		console.log(simMessages);

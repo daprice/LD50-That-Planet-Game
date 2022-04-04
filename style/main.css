@@ -212,3 +212,17 @@ body {
 	max-height: 100vh;
 	max-height: 100dvh;
 }
+
+.shipmentPath {
+	stroke-width: 6px;
+	stroke-linecap: round;
+}
+
+.filledPath {
+	stroke: #0af;
+}
+
+.tracedPath {
+	stroke: #636;
+	stroke-dasharray: 10, 10;
+}
