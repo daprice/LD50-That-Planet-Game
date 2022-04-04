@@ -5,6 +5,9 @@ class Ui {
 	playPauseButton
 	speedUpButton
 	speedDownButton
+	eventLogButton
+	eventLogDialog
+	eventLogCloseButton
 	shipmentTargetingInterface
 	cancelShipmentButton
 	
@@ -14,12 +17,15 @@ class Ui {
 		this.gameArea = document.querySelector('#game');
 		this.gameArea.appendChild(this.createDateElements());
 		this.gameArea.appendChild(this.createPlayPauseButton());
+		this.gameArea.appendChild(this.createEventLogButton());
 		this.shipmentTargetingInterface = this.createShipmentTargetingInterface();
 		for (let l = 0; l < layers; l++) {
 			const layer = document.createElementNS('http://www.w3.org/2000/svg', 'g');
 			this.layers.push(layer);
 			this.gameArea.appendChild(layer);
 		}
+		this.eventLogDialog = document.querySelector('#eventLog');
+		this.eventLogCloseButton = document.querySelector('#closeEventLog');
 	}
 	
 	addGraphic(graphicObject, visible = true, layerIndex = 1) {
@@ -66,6 +72,23 @@ class Ui {
 		this.speedUpButton.title = 'Increase game speed (shortcut: +)';
 		div.append(this.speedDownButton, this.playPauseButton, this.speedUpButton);
 		container.appendChild(div);
+		return container;
+	}
+	
+	createEventLogButton() {
+		const container = document.createElementNS('http://www.w3.org/2000/svg', 'foreignObject');
+		container.setAttributeNS(null, 'x', 0);
+		container.setAttributeNS(null, 'y', 8);
+		container.setAttributeNS(null, 'width', 100);
+		container.setAttributeNS(null, 'height', 60);
+		const div = document.createElement('div');
+		div.classList.add('ui', 'ui-text');
+		this.eventLogButton = document.createElement('button');
+		this.eventLogButton.classList.add('floating-button');
+		this.eventLogButton.textContent = '⚠';
+		this.eventLogButton.title = 'Warnings and events';
+		div.append(this.eventLogButton);
+		container.append(div);
 		return container;
 	}
 	

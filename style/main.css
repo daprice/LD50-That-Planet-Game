@@ -203,6 +203,9 @@ body {
 
 .text-content {
 	font-family: 'Manifont Grotesk', ui-sans-serif, system-ui;
+}
+
+.text-content h1, .text-content h2, .text-content h3, .text-content h4, .text-content h5, .text-content h6 {
 	letter-spacing: 0.05em;
 }
 
@@ -236,4 +239,10 @@ body {
 	to {
 		stroke-dashoffset: 20;
 	}
+}
+
+#eventLog ul {
+	list-style-type: none;
+	padding: 0px;
+	line-height: 1.5em;
 }

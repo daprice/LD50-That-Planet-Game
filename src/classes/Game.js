@@ -2,6 +2,7 @@ import { GameState } from './GameState.js';
 import { Planet } from './Planet.js';
 import { Shipment } from './Shipment.js';
 import { Ui } from './Ui.js';
+import { EventLog } from './EventLog.js';
 
 class Game {
 	ui
@@ -14,6 +15,9 @@ class Game {
 	maxSpeed = 125
 	autosaveTriggerCallback
 	pausedBeforeShipmentTargeting = false
+	pausedBeforeEventLog = false
+	eventLogOpen = false
+	eventLogger = new EventLog()
 	shipmentTargetingMode = false
 	shipmentTargetingOptions
 	
@@ -61,6 +65,10 @@ class Game {
 			}
 		});
 		this.ui.cancelShipmentButton.addEventListener('click', e => this.shipmentCanceled());
+		this.ui.eventLogButton.addEventListener('click', e => {
+			this.openEventLog();
+		});
+		this.ui.eventLogCloseButton.addEventListener('click', e => this.closeEventLog());
 	}
 	
 	togglePause() {
@@ -80,8 +88,8 @@ class Game {
 	}
 	
 	resume() {
-		if(this.shipmentTargetingMode === true) {
-			console.log('cant unpause because of shipment targeting mode')
+		if(this.shipmentTargetingMode === true || this.eventLogOpen === true) {
+			console.log('cant unpause because of a mode/modal')
 			return;
 		}
 		this.simulationTick();
@@ -115,6 +123,22 @@ class Game {
 		}
 	}
 	
+	openEventLog() {
+		this.pausedBeforeEventLog = (this.tickInterval === undefined);
+		this.eventLogOpen = true;
+		this.pause();
+		this.eventLogger.presentLog();
+		this.ui.eventLogDialog.showModal();
+	}
+	
+	closeEventLog() {
+		this.ui.eventLogDialog.close();
+		this.eventLogOpen = false;
+		if(!this.pausedBeforeEventLog) {
+			this.resume();
+		}
+	}
+	
 	simulationTick() {
 		this.gameState.increment();
 		console.group/*Collapsed*/(`${this.gameState.year} ${this.gameState.month}`);
@@ -131,6 +155,7 @@ class Game {
 			shipment.updateGraphic();
 		}
 		console.log(simMessages);
+		this.eventLogger.addEvents(this.gameState.year, this.gameState.month, simMessages);
 		
 		console.groupEnd();
 		

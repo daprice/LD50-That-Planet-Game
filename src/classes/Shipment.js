@@ -61,7 +61,7 @@ class Shipment {
 			if(this.progress >= 1) {
 				this.progress = 1;
 				this.finishShipment();
-				simMessages.push(`The starship from ${this.sourceName} has arrived at ${this.destinationName}`);
+				simMessages.push(`The starship from ${this.sourceName} arrived at ${this.destinationName}.`);
 			}
 		}
 		

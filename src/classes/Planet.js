@@ -146,7 +146,7 @@ class Planet {
 			// food shortage reduces population gradually: 1/20 of the unfed people go away each month
 			// food surplus helps population increase faster than normal
 			if(foodShortage > 0) {
-				simMessages.push(`Food shortage on ${this.name}`);
+				simMessages.push(`Food shortage on ${this.name}.`);
 				this.resources.population -= this.resources.population * foodShortage / 20;
 			} else {
 				this.resources.population += this.resources.population * (0.01/12 + (-foodShortage) * 0.05/12);
@@ -163,14 +163,14 @@ class Planet {
 			const co2Excess = (this.resources.co2 - 0.0005) / 0.0005;
 			const co2Deaths = Math.round(this.resources.population * 0.1 * co2Excess);
 			if(co2Excess > 0) {
-				simMessages.push(`Unhealthy carbon dioxide levels on ${this.name} killed ${PlanetaryResources.popFormatter.format(co2Deaths)} this month`);
+				simMessages.push(`Unhealthy carbon dioxide levels on ${this.name} killed ${PlanetaryResources.popFormatter.format(co2Deaths)}.`);
 				this.resources.population -= co2Deaths;
 			}
 			
 			// too many toxins reduce population slowly
 			const toxinDeaths = Math.round(this.resources.population * this.resources.toxins / 12);
 			if(this.resources.toxins > 0.02) {
-				simMessages.push(`Toxins on ${this.name} killed ${PlanetaryResources.popFormatter.format(toxinDeaths)} this month`);
+				simMessages.push(`Toxins on ${this.name} killed ${PlanetaryResources.popFormatter.format(toxinDeaths)}.`);
 			}
 			this.resources.population -= toxinDeaths;
 			
