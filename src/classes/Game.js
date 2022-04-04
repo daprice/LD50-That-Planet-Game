@@ -162,6 +162,7 @@ class Game {
 		// trigger save
 		if(this.gameState.month === 12 && this.autosaveTriggerCallback !== undefined) {
 			this.autosaveTriggerCallback();
+			this.eventLogger.addEvents(this.gameState.year, this.gameState.month, ['Autosave completed.']);
 		}
 	}
 	
