@@ -97,11 +97,11 @@ class Planet {
 		
 		if(this.resources.centauriPlants > 0) {
 			// growth/decline
-			if(this.resources.centauriPlants < this.resources.oxygen) {
+			if(this.resources.centauriPlants < this.resources.oxygen*2) {
 				this.resources.centauriPlants += this.resources.centauriPlants * 0.017;
-			} else if (this.resources.centauriPlants > this.resources.oxygen) {
-				if (this.resources.centauriPlants * 0.9 > this.resources.water) {
-					simMessages.push(`Centauri-like vegetation is dying off on ${this.name}. Scientists are unsure what element these plants require that ${this.name} lacks.`);
+			} else if (this.resources.centauriPlants > this.resources.oxygen*2) {
+				if (this.resources.centauriPlants * 0.9 > this.resources.oxygen*2) {
+					simMessages.push(`Centauri-like vegetation is dying off on ${this.name}. This could be a seasonal thing, or maybe ${this.name} lacks an element these plants crave.`);
 				}
 				this.resources.centauriPlants -= 0.04;
 			}
@@ -122,7 +122,7 @@ class Planet {
 				this.resources.rossPlants += this.resources.rossPlants * 0.017;
 			} else if (this.resources.rossPlants > this.resources.water) {
 				if(this.resources.rossPlants * 0.9 > this.resources.water) {
-					simMessages.push(`Ross-like vegetation is dying off on ${this.name}. Scientists are unsure what element these plants require that ${this.name} lacks.`);
+					simMessages.push(`Ross-like vegetation is dying off on ${this.name}. This could be a seasonal thing, or maybe ${this.name} lacks an element these plants crave.`);
 				}
 				this.resources.rossPlants -= 0.04;
 			}
