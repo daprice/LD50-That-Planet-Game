@@ -59,10 +59,12 @@ class Planet {
 		this.cloudLayer = Planet.imageLayer(xPos, yPos, width, height, 'assets/Planet/Clouds.svg');
 		this.co2Layer = Planet.imageLayer(xPos, yPos, width, height, 'assets/Planet/CO2 clouds.svg');
 		this.nightLayer = Planet.imageLayer(xPos, yPos, width, height, 'assets/Planet/Night.svg');
+		this.settlementLayer = Planet.imageLayer(xPos, yPos, width, height, 'assets/Planet/Settlement.svg');
+		this.spaceportLayer = Planet.imageLayer(xPos, yPos, width, height, 'assets/Planet/Spaceport.svg');
 		this.cities1Layer = Planet.imageLayer(xPos, yPos, width, height, 'assets/Planet/Cities 1.svg');
 		this.cities2Layer = Planet.imageLayer(xPos, yPos, width, height, 'assets/Planet/Cities 2.svg');
 		
-		graphicElement.append(this.baseLayer, this.earthLayer, this.rossLayer, this.centauriLayer, this.water1Layer, this.water2Layer, this.toxinsLayer, this.cloudLayer, this.co2Layer, this.nightLayer, this.cities1Layer, this.cities2Layer);
+		graphicElement.append(this.baseLayer, this.earthLayer, this.rossLayer, this.centauriLayer, this.water1Layer, this.water2Layer, this.toxinsLayer, this.cloudLayer, this.co2Layer, this.nightLayer, this.settlementLayer, this.spaceportLayer, this.cities1Layer, this.cities2Layer);
 		this.updateGraphic();
 		
 		return graphicElement;
@@ -230,18 +232,38 @@ class Planet {
 		this.co2Layer.setAttributeNS(null, 'opacity', Math.min(1, this.resources.co2 * 1000));
 		let pop1;
 		let pop2;
+		let spaceport;
+		let settlement;
 		if(this.resources.population > 1000000000) {
 			pop1 = 1;
 			pop2 = 1;
+			spaceport = 0;
+			settlement = 0;
 		} else if(this.resources.population > 100000) {
 			pop1 = 1;
 			pop2 = 0;
+			spaceport = 0;
+			settlement = 0;
+		} else if(this.resources.population >= 10000) {
+			pop1 = 0;
+			pop2 = 0;
+			spaceport = 1;
+			settlement = 1;
+		} else if(this.resources.population > 0) {
+			pop1 = 0;
+			pop2 = 0;
+			spaceport = 0;
+			settlement = 1;
 		} else {
 			pop1 = 0;
 			pop2 = 0;
+			settlement = 0;
+			spaceport = 0;
 		}
 		this.cities1Layer.setAttributeNS(null, 'opacity', pop1);
 		this.cities2Layer.setAttributeNS(null, 'opacity', pop2);
+		this.spaceportLayer.setAttributeNS(null, 'opacity', spaceport);
+		this.settlementLayer.setAttributeNS(null, 'opacity', settlement);
 		if(this.popover !== undefined) {
 			this.resources.updatePopover(this.popover);
 		}
