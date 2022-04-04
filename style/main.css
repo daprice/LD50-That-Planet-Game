@@ -114,6 +114,12 @@ body {
 	transition: none;
 }
 
+.ui-button:disabled {
+	background-color: rgba(102, 119, 102, 0.661);
+	color: #777;
+	cursor: help;
+}
+
 .ui-heading {
 	font-family: 'virgo_01', ui-sans-serif, system-ui;
 	font-size: 1.6em;

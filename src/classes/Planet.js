@@ -189,7 +189,21 @@ class Planet {
 			this.resources.toxins += this.resources.population / 1000000000 * 0.01 / 120;
 		}
 		
-		/* !TODO: set launch button availability */
+		/* set launch button availability */
+		const launchAvailable = (this.resources.population >= 10000);
+		const seedLaunchAvailable = launchAvailable && this.resources.getAllPlantsTotal() > 0;
+		this.popover.shipPopsButton.disabled = !launchAvailable;
+		this.popover.shipSeedsButton.disabled = !seedLaunchAvailable;
+		if(!launchAvailable) {
+			this.popover.shipPopsButton.title = `Launch infrastructure on ${this.name} requires population of 10,000 or more`;
+		} else {
+			this.popover.shipPopsButton.title = '';
+		}
+		if(!seedLaunchAvailable) {
+			this.popover.shipSeedsButton.title = `Launching seeds from ${this.name} requires a population of 10,000 or more and available flora`;
+		} else {
+			this.popover.shipSeedsButton.title = '';
+		}
 		
 		return simMessages;
 	}
