@@ -195,12 +195,12 @@ class Planet {
 		this.popover.shipPopsButton.disabled = !launchAvailable;
 		this.popover.shipSeedsButton.disabled = !seedLaunchAvailable;
 		if(!launchAvailable) {
-			this.popover.shipPopsButton.title = `Launch infrastructure on ${this.name} requires population of 10,000 or more`;
+			this.popover.shipPopsButton.title = `Launch infrastructure on ${this.name} requires population of ${PlanetaryResources.popFormatter.format(10000)} or more`;
 		} else {
 			this.popover.shipPopsButton.title = '';
 		}
 		if(!seedLaunchAvailable) {
-			this.popover.shipSeedsButton.title = `Launching seeds from ${this.name} requires a population of 10,000 or more and available flora`;
+			this.popover.shipSeedsButton.title = `Launching seeds from ${this.name} requires a population of ${PlanetaryResources.popFormatter.format(10000)} or more and available flora`;
 		} else {
 			this.popover.shipSeedsButton.title = '';
 		}
