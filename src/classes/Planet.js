@@ -168,8 +168,9 @@ class Planet {
 			}
 			
 			// too many toxins reduce population slowly
-			const toxinDeaths = Math.round(this.resources.population * this.resources.toxins / 12);
+			let toxinDeaths = Math.round(this.resources.population * this.resources.toxins / 12);
 			if(this.resources.toxins > 0.02) {
+				toxinDeaths += 10000;
 				simMessages.push(`Toxins on ${this.name} killed ${PlanetaryResources.popFormatter.format(toxinDeaths)}.`);
 			}
 			this.resources.population -= toxinDeaths;
