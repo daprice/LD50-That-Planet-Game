@@ -56,7 +56,7 @@ class Shipment {
 		const simMessages = [];
 		
 		if(this.progress < 1) {
-			const movedDistance = 1;
+			const movedDistance = 2;
 			this.progress += movedDistance / this.distance;
 			if(this.progress >= 1) {
 				this.progress = 1;

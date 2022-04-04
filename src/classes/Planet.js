@@ -149,7 +149,7 @@ class Planet {
 				simMessages.push(`Food shortage on ${this.name}.`);
 				this.resources.population -= this.resources.population * foodShortage / 20;
 			} else {
-				this.resources.population += this.resources.population * (0.01/12 + (-foodShortage) * 0.05/12);
+				this.resources.population += this.resources.population * (0.01/12 + (-foodShortage) * 0.5/12);
 			}
 			
 			// insufficient oxygen quickly reduces population
