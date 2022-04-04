@@ -172,6 +172,9 @@ class Game {
 			for(const planet of this.planets) {
 				totalPop += planet.resources.population;
 			}
+			for(const shipment of this.shipments) {
+				totalPop += shipment.passengers;
+			}
 			this.eventLogger.addEvents(this.gameState.year, this.gameState.month, [`There are ${PlanetaryResources.longPopFormatter.format(totalPop)} of your species alive.`]);
 			console.log('census complete');
 			if (totalPop <= 0) {
