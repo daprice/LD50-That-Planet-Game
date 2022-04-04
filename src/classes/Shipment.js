@@ -1,3 +1,5 @@
+import { Planet } from './Planet.js';
+
 class Shipment {
 	passengers
 	earthSeeds
@@ -11,6 +13,7 @@ class Shipment {
 	element
 	parent
 	filledPath
+	starshipImage
 	
 	sourcePlanet
 	destinationPlanet
@@ -88,16 +91,43 @@ class Shipment {
 		filledPath.setAttributeNS(null, 'stroke-dashoffset', this.distance - (this.distance * this.progress));
 		this.filledPath = filledPath;
 		
+		
+		const pos = this.getCurrentPosition();
+		const angle = this.getAngle();
+		const starshipGraphic = Planet.imageLayer(pos.x - 15, pos.y - 15, 30, 30, 'assets/starship.svg');
+		starshipGraphic.setAttributeNS(null, 'transform', `rotate(${angle}, ${pos.x - 15}, ${pos.y - 15})`);
+		this.starshipImage = starshipGraphic;
+		
 		container.append(tracedPath, filledPath);
+		this.gameWorld.ui.layers[2].appendChild(starshipGraphic);
 		
 		return container;
+	}
+	
+	getCurrentPosition() {
+		const distX = (this.destinationPlanet.x - this.sourcePlanet.x) * this.progress;
+		const distY = (this.destinationPlanet.y - this.sourcePlanet.y) * this.progress;
+		return {x: this.sourcePlanet.x + distX, y: this.sourcePlanet.y + distY};
+	}
+	
+	getAngle() {
+		const distX = (this.destinationPlanet.x - this.sourcePlanet.x) * this.progress;
+		const distY = (this.destinationPlanet.y - this.sourcePlanet.y) * this.progress;
+		return Math.atan2(distY, distX) * (180 / Math.PI) + 90;
 	}
 	
 	updateGraphic() {
 		this.filledPath.setAttributeNS(null, 'stroke-dashoffset', this.distance - (this.distance * this.progress));
 		
+		const pos = this.getCurrentPosition();
+		const angle = this.getAngle();
+		this.starshipImage.setAttributeNS(null, 'x', pos.x - 15);
+		this.starshipImage.setAttributeNS(null, 'y', pos.y - 15);
+		this.starshipImage.setAttributeNS(null, 'transform', `rotate(${angle}, ${pos.x}, ${pos.y})`);
+		
 		if (this.progress >= 1) {
 			this.element.setAttributeNS(null, 'opacity', 0);
+			this.starshipImage.setAttributeNS(null, 'opacity', 0);
 		}
 	}
 }
