@@ -9,6 +9,9 @@ class Game {
 	planets
 	shipments
 	tickInterval
+	speed = 1000 // real time per simulation tick
+	minSpeed = 8000
+	maxSpeed = 125
 	autosaveTriggerCallback
 	pausedBeforeShipmentTargeting = false
 	shipmentTargetingMode = false
@@ -40,10 +43,20 @@ class Game {
 			return shipment;
 		});
 		this.ui.playPauseButton.addEventListener('click', e => this.togglePause());
+		this.ui.speedDownButton.addEventListener('click', e => this.speedDown());
+		this.ui.speedUpButton.addEventListener('click', e => this.speedUp());
 		document.addEventListener('keyup', e => {
 			if(e.key === ' ') {
 				e.preventDefault();
 				this.togglePause();
+				return false;
+			} else if (e.key === '-') {
+				e.preventDefault();
+				this.speedDown();
+				return false;
+			} else if (e.key === '+' || e.key === '=') {
+				e.preventDefault();
+				this.speedUp();
 				return false;
 			}
 		});
@@ -62,7 +75,7 @@ class Game {
 		clearInterval(this.tickInterval);
 		this.tickInterval = undefined;
 		this.ui.playPauseButton.textContent = '▶︎';
-		this.ui.playPauseButton.title = 'Play';
+		this.ui.playPauseButton.title = 'Play (shortcut: spacebar)';
 		this.ui.setPaused();
 	}
 	
@@ -72,10 +85,34 @@ class Game {
 			return;
 		}
 		this.simulationTick();
-		this.tickInterval = setInterval(this.simulationTick.bind(this), 1000);
+		this.tickInterval = setInterval(this.simulationTick.bind(this), this.speed);
 		this.ui.playPauseButton.textContent = '❚ ❚';
-		this.ui.playPauseButton.title = 'Pause';
+		this.ui.playPauseButton.title = 'Pause (shortcut: spacebar)';
 		this.ui.unsetPaused();
+	}
+	
+	speedUp() {
+		if(this.speed > this.maxSpeed) {
+			clearInterval(this.tickInterval);
+			this.speed /= 2;
+			if(this.tickInterval !== undefined) this.tickInterval = setInterval(this.simulationTick.bind(this), this.speed);
+			if(this.speed <= this.maxSpeed) {
+				this.ui.speedUpButton.disabled = true;
+			}
+			this.ui.speedDownButton.disabled = false;
+		}
+	}
+	
+	speedDown() {
+		if(this.speed < this.minSpeed) {
+			clearInterval(this.tickInterval);
+			this.speed *= 2;
+			if(this.tickInterval !== undefined) this.tickInterval = setInterval(this.simulationTick.bind(this), this.speed);
+			if(this.speed >= this.minSpeed) {
+				this.ui.speedDownButton.disabled = true;
+			}
+			this.ui.speedUpButton.disabled = false;
+		}
 	}
 	
 	simulationTick() {

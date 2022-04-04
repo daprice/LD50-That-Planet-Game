@@ -3,6 +3,8 @@ class Ui {
 	layers = []
 	dateElement
 	playPauseButton
+	speedUpButton
+	speedDownButton
 	shipmentTargetingInterface
 	cancelShipmentButton
 	
@@ -54,7 +56,15 @@ class Ui {
 		div.classList.add('rightAlignedText', 'ui', 'ui-text');
 		this.playPauseButton = document.createElement('button');
 		this.playPauseButton.classList.add('floating-button');
-		div.appendChild(this.playPauseButton);
+		this.speedDownButton = document.createElement('button');
+		this.speedDownButton.classList.add('floating-button');
+		this.speedDownButton.textContent = '-';
+		this.speedDownButton.title = 'Decrease game speed (shortcut: -)';
+		this.speedUpButton = document.createElement('button');
+		this.speedUpButton.classList.add('floating-button');
+		this.speedUpButton.textContent = '+';
+		this.speedUpButton.title = 'Increase game speed (shortcut: +)';
+		div.append(this.speedDownButton, this.playPauseButton, this.speedUpButton);
 		container.appendChild(div);
 		return container;
 	}
