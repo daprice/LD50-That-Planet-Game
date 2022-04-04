@@ -68,6 +68,22 @@ const scenario = {
 				rossPlants: 0,
 			},
 		},
+		{
+			name: 'Ross 128 b',
+			x: 680,
+			y: 500,
+			size: 90,
+			resources: {
+				population: 0,
+				oxygen: .15,
+				co2: .0004,
+				water: .4,
+				toxins: 0,
+				earthPlants: 0,
+				centauriPlants: 0,
+				rossPlants: .35,
+			},
+		},
 	],
 	shipments: [],
 }
