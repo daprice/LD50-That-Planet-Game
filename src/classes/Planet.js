@@ -82,7 +82,7 @@ class Planet {
 				if(this.resources.earthPlants * 0.9 > this.resources.water) {
 					simMessages.push(`Earth-like vegetation is dying off on ${this.name} due to lack of water!`);
 				}
-				this.resources.earthPlants -= 0.05; // lose 5% of possible plant population if there isn't enough water
+				this.resources.earthPlants -= 0.04; // lose 4% of possible plant population if there isn't enough water
 			}
 			this.resources.earthPlants = Math.min(1, Math.max(0, this.resources.earthPlants)); // keep within 0-1 range
 			
@@ -103,7 +103,7 @@ class Planet {
 				if (this.resources.centauriPlants * 0.9 > this.resources.water) {
 					simMessages.push(`Centauri-like vegetation is dying off on ${this.name}. Scientists are unsure what element these plants require that ${this.name} lacks.`);
 				}
-				this.resources.centauriPlants -= 0.05;
+				this.resources.centauriPlants -= 0.04;
 			}
 			this.resources.centauriPlants = Math.min(1, Math.max(0, this.resources.centauriPlants));
 			
@@ -124,7 +124,7 @@ class Planet {
 				if(this.resources.rossPlants * 0.9 > this.resources.water) {
 					simMessages.push(`Ross-like vegetation is dying off on ${this.name}. Scientists are unsure what element these plants require that ${this.name} lacks.`);
 				}
-				this.resources.rossPlants -= 0.05;
+				this.resources.rossPlants -= 0.04;
 			}
 			this.resources.rossPlants = Math.min(1, Math.max(0, this.resources.rossPlants));
 			
@@ -327,9 +327,9 @@ class Planet {
 		shipSeedsButton.addEventListener('click', e => {
 			this.shipmentRequestCallback({
 				sourceName: this.name, 
-				earthSeeds: this.earthPlants > 0 ? 0.05 : 0, 
-				centauriSeeds: this.centauriPlants > 0 ? 0.05 : 0, 
-				rossSeeds: this.rossPlants > 0 ? 0.05 : 0,
+				earthSeeds: this.resources.earthPlants > 0 ? 0.03 : 0, 
+				centauriSeeds: this.resources.centauriPlants > 0 ? 0.01 : 0, 
+				rossSeeds: this.resources.rossPlants > 0 ? 0.03 : 0,
 			});
 		});
 		popover.shipSeedsButton = shipSeedsButton;

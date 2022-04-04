@@ -26,7 +26,7 @@ class Game {
 		this.ui = new Ui();
 		this.gameState = new GameState(scenario.gameState);
 		this.planets = scenario.planets.map(planetData => {
-			let planet = new Planet(planetData);
+			const planet = new Planet(planetData);
 			this.ui.addGraphic(planet);
 			this.ui.addGraphic(planet.popover, false);
 			planet.element.classList.add('clickable');
