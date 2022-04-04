@@ -4,7 +4,6 @@
 
 html {
 	--background-space: rgb(24, 0, 78);
-	--background-space: color(display-p3 0.084 0 0.293);
 	--background-gray: #335;
 	--foreground-gray: rgb(233, 233, 233);
 	--foreground-color: rgb(162, 229, 162);
@@ -12,6 +11,12 @@ html {
 	color: var(--foreground-gray);
 	background-color: var(--background-space);
 	-webkit-text-size-adjust: 100%;
+}
+
+@supports(color: color(display-p3 0 1 0)) {
+	html {
+		--background-space: color(display-p3 0.084 0 0.293);
+	}
 }
 
 text {
