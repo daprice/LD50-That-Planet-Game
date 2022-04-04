@@ -41,6 +41,11 @@ body {
 
 .targeting-mode .clickable {
 	cursor: crosshair;
+	opacity: 0.8;
+}
+
+.targeting-mode .clickable:hover {
+	opacity: 1;
 }
 
 .popoverContainer {
