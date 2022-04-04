@@ -77,7 +77,7 @@ class Planet {
 			// growth/decline
 			if(this.resources.earthPlants < this.resources.water) {
 				this.resources.earthPlants += this.resources.earthPlants * 0.017; // double every 10 years or something like that, up to the water limit
-			} else if(this.resources.earthPlants > this.resources.water) {
+			} else if (this.resources.earthPlants > this.resources.water) {
 				if(this.resources.earthPlants * 0.9 > this.resources.water) {
 					simMessages.push(`Earth-like vegetation is dying off on ${this.name} due to lack of water!`);
 				}
@@ -90,8 +90,50 @@ class Planet {
 			const maxCo2Reduction = this.resources.earthPlants * 0.0001 / 120; // decrease by up to .01% every 10 years
 			const actualCo2Reduction = Math.min(this.resources.co2, maxCo2Reduction);
 			this.resources.co2 -= actualCo2Reduction;
-			this.resources.oxygen += actualCo2Reduction;
+			this.resources.oxygen += actualCo2Reduction * 10;
 			this.resources.oxygen = Math.min(1, this.resources.oxygen);
+		}
+		
+		if(this.resources.centauriPlants > 0) {
+			// growth/decline
+			if(this.resources.centauriPlants < this.resources.oxygen) {
+				this.resources.centauriPlants += this.resources.centauriPlants * 0.017;
+			} else if (this.resources.centauriPlants > this.resources.oxygen) {
+				if (this.resources.centauriPlants * 0.9 > this.resources.water) {
+					simMessages.push(`Centauri-like vegetation is dying off on ${this.name}. Scientists are unsure what element these plants require that ${this.name} lacks.`);
+				}
+				this.resources.centauriPlants -= 0.05;
+			}
+			this.resources.centauriPlants = Math.min(1, Math.max(0, this.resources.centauriPlants));
+			
+			//effects
+			// tox -> water
+			const maxToxReduction = this.resources.centauriPlants * 0.01 / 120; // up to 1% eery 10 years
+			const actualToxReduction = Math.min(this.resources.toxins, maxToxReduction);
+			this.resources.toxins -= actualToxReduction;
+			this.resources.water += actualToxReduction;
+			this.resources.water = Math.min(1, this.resources.water);
+		}
+		
+		if(this.resources.rossPlants > 0) {
+			//growth/decline
+			if(this.resources.rossPlants < this.resources.water) {
+				this.resources.rossPlants += this.resources.rossPlants * 0.017;
+			} else if (this.resources.rossPlants > this.resources.water) {
+				if(this.resources.rossPlants * 0.9 > this.resources.water) {
+					simMessages.push(`Ross-like vegetation is dying off on ${this.name}. Scientists are unsure what element these plants require that ${this.name} lacks.`);
+				}
+				this.resources.rossPlants -= 0.05;
+			}
+			this.resources.rossPlants = Math.min(1, Math.max(0, this.resources.rossPlants));
+			
+			// effects
+			// tox -> co2
+			const maxToxReduction = this.resources.rossPlants * 0.01 / 120;
+			const actualToxReduction = Math.min(this.resources.toxins, maxToxReduction);
+			this.resources.toxins -= actualToxReduction;
+			this.resources.co2 += actualToxReduction;
+			this.resources.co2 = Math.min(1, this.resources.co2);
 		}
 		
 		// population effects
@@ -153,9 +195,9 @@ class Planet {
 	}
 	
 	updateGraphic() {
-		this.earthLayer.setAttributeNS(null, 'opacity', this.resources.earthPlants);
-		this.rossLayer.setAttributeNS(null, 'opacity', this.resources.rossPlants);
-		this.centauriLayer.setAttributeNS(null, 'opacity', this.resources.centauriPlants);
+		this.earthLayer.setAttributeNS(null, 'opacity', Math.min(1, this.resources.earthPlants * 2));
+		this.rossLayer.setAttributeNS(null, 'opacity', Math.min(this.resources.rossPlants * 2));
+		this.centauriLayer.setAttributeNS(null, 'opacity', Math.min(this.resources.centauriPlants * 2));
 		let water1;
 		let water2;
 		if(this.resources.water > 0.5) {
