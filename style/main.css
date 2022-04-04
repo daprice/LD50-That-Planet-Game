@@ -216,6 +216,7 @@ body {
 .shipmentPath {
 	stroke-width: 6px;
 	stroke-linecap: round;
+	transition: all 0.2s ease-out;
 }
 
 .filledPath {
@@ -225,4 +226,14 @@ body {
 .tracedPath {
 	stroke: #636;
 	stroke-dasharray: 10, 10;
+}
+
+.playing .tracedPath {
+	animation: marching 1s infinite linear;
+}
+
+@keyframes marching {
+	to {
+		stroke-dashoffset: 20;
+	}
 }

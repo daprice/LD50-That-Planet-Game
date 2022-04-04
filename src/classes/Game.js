@@ -36,7 +36,7 @@ class Game {
 		});
 		this.shipments = scenario.shipments.map(shipmentData => {
 			let shipment = new Shipment(shipmentData, this);
-			this.ui.addGraphic(shipment);
+			this.ui.addGraphic(shipment, true, 0);
 			return shipment;
 		});
 		this.ui.playPauseButton.addEventListener('click', e => this.togglePause());
@@ -63,6 +63,7 @@ class Game {
 		this.tickInterval = undefined;
 		this.ui.playPauseButton.textContent = '▶︎';
 		this.ui.playPauseButton.title = 'Play';
+		this.ui.setPaused();
 	}
 	
 	resume() {
@@ -74,6 +75,7 @@ class Game {
 		this.tickInterval = setInterval(this.simulationTick.bind(this), 1000);
 		this.ui.playPauseButton.textContent = '❚ ❚';
 		this.ui.playPauseButton.title = 'Pause';
+		this.ui.unsetPaused();
 	}
 	
 	simulationTick() {
@@ -124,7 +126,7 @@ class Game {
 	
 	shipmentAdded(shipment) {
 		this.shipments.push(shipment);
-		this.ui.addGraphic(shipment);
+		this.ui.addGraphic(shipment, true, 0);
 	}
 	
 	shipmentCanceled() {

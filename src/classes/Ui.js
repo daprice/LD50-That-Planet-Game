@@ -1,5 +1,6 @@
 class Ui {
 	gameArea
+	layers = []
 	dateElement
 	playPauseButton
 	shipmentTargetingInterface
@@ -7,18 +8,24 @@ class Ui {
 	
 	static monthNames = ['Zeroary', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 	
-	constructor() {
+	constructor(layers=3) {
 		this.gameArea = document.querySelector('#game');
 		this.gameArea.appendChild(this.createDateElements());
 		this.gameArea.appendChild(this.createPlayPauseButton());
 		this.shipmentTargetingInterface = this.createShipmentTargetingInterface();
+		for (let l = 0; l < layers; l++) {
+			const layer = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+			this.layers.push(layer);
+			this.gameArea.appendChild(layer);
+		}
 	}
 	
-	addGraphic(graphicObject, visible = true) {
+	addGraphic(graphicObject, visible = true, layerIndex = 1) {
+		const layer = this.layers[layerIndex];
 		if(visible) {
-			this.gameArea.appendChild(graphicObject.element);
+			layer.appendChild(graphicObject.element);
 		}
-		graphicObject.parent = this.gameArea;
+		graphicObject.parent = layer;
 	}
 	
 	createDateElements() {
@@ -81,6 +88,16 @@ class Ui {
 		this.gameArea.removeChild(this.shipmentTargetingInterface);
 		this.gameArea.classList.remove('targeting-mode');
 		this.playPauseButton.disabled = false;
+	}
+	
+	setPaused() {
+		this.gameArea.classList.add('paused');
+		this.gameArea.classList.remove('playing');
+	}
+	
+	unsetPaused() {
+		this.gameArea.classList.remove('paused');
+		this.gameArea.classList.add('playing');
 	}
 }
 
