@@ -110,7 +110,7 @@ class Planet {
 			}
 			
 			// insufficient oxygen quickly reduces population
-			const oxygenShortage = 0.15 - this.resources.oxygen;
+			const oxygenShortage = 0.1 - this.resources.oxygen;
 			if (oxygenShortage > 0) {
 				simMessages.push(`${this.name} lacks sufficient oxygen for the survival of its population!`);
 				this.resources.population -= this.resources.population * 0.5;
