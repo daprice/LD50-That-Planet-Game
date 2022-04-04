@@ -323,7 +323,12 @@ class Planet {
 		shipSeedsButton.classList.add('ui-button');
 		shipSeedsButton.textContent = 'Launch seeds';
 		shipSeedsButton.addEventListener('click', e => {
-			this.shipmentRequestCallback({sourceName: this.name, earthSeeds: this.earthPlants, centauriSeeds: this.centauriPlants, rossSeeds: this.rossPlants});
+			this.shipmentRequestCallback({
+				sourceName: this.name, 
+				earthSeeds: this.earthPlants > 0 ? 0.05 : 0, 
+				centauriSeeds: this.centauriPlants > 0 ? 0.05 : 0, 
+				rossSeeds: this.rossPlants > 0 ? 0.05 : 0,
+			});
 		});
 		popover.shipSeedsButton = shipSeedsButton;
 		
