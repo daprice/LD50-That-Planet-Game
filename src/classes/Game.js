@@ -21,12 +21,14 @@ class Game {
 	eventLogger = new EventLog()
 	shipmentTargetingMode = false
 	shipmentTargetingOptions
-	centauriPlantsDiscovered = false
-	rossPlantsDiscovered = false
+	centauriPlantsDiscovered
+	rossPlantsDiscovered
 	
 	constructor(scenario) {
 		this.ui = new Ui();
 		this.gameState = new GameState(scenario.gameState);
+		this.rossPlantsDiscovered = scenario.rossPlantsDiscovered;
+		this.centauriPlantsDiscovered = scenario.centauriPlantsDiscovered;
 		this.planets = scenario.planets.map(planetData => {
 			const planet = new Planet(planetData);
 			this.ui.addGraphic(planet);
@@ -268,6 +270,8 @@ class Game {
 			}
 		});
 		saveState.timestamp = Date.now();
+		saveState.rossPlantsDiscovered = this.rossPlantsDiscovered;
+		saveState.centauriPlantsDiscovered = this.centauriPlantsDiscovered;
 		return saveState;
 	}
 	
