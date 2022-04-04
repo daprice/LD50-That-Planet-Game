@@ -34,7 +34,7 @@ class PlanetaryResources {
 		popover.co2Cell.textContent = this.constructor.percentFormatter.format(this.co2);
 		if (this.co2 < 0.0005) {
 			popover.co2Cell.className = 'safeResource';
-		} else if (this.co2 < 0.0007) {
+		} else if (this.co2 < 0.00055) {
 			popover.co2Cell.className = 'warnResource';
 		} else {
 			popover.co2Cell.className = 'unsafeResource';
