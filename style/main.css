@@ -89,10 +89,17 @@ body {
 	border: none;
 	cursor: pointer;
 	font-weight: bold;
+	border-radius: 0.2em;
 }
 
 .floating-button:hover {
 	background: var(--background-gray);
+}
+
+.floating-button:disabled {
+	background: none;
+	color: rgba(255,255,255,0.3);
+	cursor: default;
 }
 
 .ui-button {

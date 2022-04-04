@@ -74,11 +74,13 @@ class Ui {
 	beginShipmentTargeting() {
 		this.gameArea.appendChild(this.shipmentTargetingInterface);
 		this.gameArea.classList.add('targeting-mode');
+		this.playPauseButton.disabled = true;
 	}
 	
 	endShipmentTargeting() {
 		this.gameArea.removeChild(this.shipmentTargetingInterface);
 		this.gameArea.classList.remove('targeting-mode');
+		this.playPauseButton.disabled = false;
 	}
 }
 
