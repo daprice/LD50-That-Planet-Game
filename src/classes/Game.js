@@ -1,5 +1,6 @@
 import { GameState } from './GameState.js';
 import { Planet } from './Planet.js';
+import { PlanetaryResources } from './PlanetaryResources.js';
 import { Shipment } from './Shipment.js';
 import { Ui } from './Ui.js';
 import { EventLog } from './EventLog.js';
@@ -163,6 +164,16 @@ class Game {
 		if(this.gameState.month === 12 && this.autosaveTriggerCallback !== undefined) {
 			this.autosaveTriggerCallback();
 			this.eventLogger.addEvents(this.gameState.year, this.gameState.month, ['Autosave completed.']);
+		}
+		
+		// census
+		if(this.gameState.month === 1) {
+			let totalPop = 0;
+			for(const planet of this.planets) {
+				totalPop += planet.resources.population;
+			}
+			this.eventLogger.addEvents(this.gameState.year, this.gameState.month, [`There are ${PlanetaryResources.longPopFormatter.format(totalPop)} of your species alive.`]);
+			console.log('census complete');
 		}
 	}
 	

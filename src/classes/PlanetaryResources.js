@@ -9,6 +9,7 @@ class PlanetaryResources {
 	rossPlants // converts toxins to co2, req water
 	
 	static popFormatter = new Intl.NumberFormat(undefined, {signDisplay: 'never', notation: 'compact', compactDisplay: 'short'});
+	static longPopFormatter = new Intl.NumberFormat(undefined, {signDisplay: 'never', notation: 'compact', compactDisplay: 'long'});
 	static percentFormatter = new Intl.NumberFormat(undefined, {style: 'percent', maximumFractionDigits: 2, maximumSignificantDigits: 2, signDisplay: 'never'});
 	
 	constructor({population=0, oxygen=0, co2=0, water=0, toxins=0, earthPlants=0, centauriPlants=0, rossPlants=0}) {
