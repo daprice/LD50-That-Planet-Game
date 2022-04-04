@@ -27,6 +27,7 @@ saveManager.startNewCallback = () => {
 saveManager.checkAndPrompt();
 
 document.getElementById('resetButton').addEventListener('click', e => {
+	theGame.pause();
 	theGame = new Game(scenario);
 	theGame.resume();
 	theGame.ui.lossDialog.close();
