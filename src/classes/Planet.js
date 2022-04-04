@@ -118,13 +118,18 @@ class Planet {
 			
 			// too much CO2 reduces population
 			const co2Excess = (this.resources.co2 - 0.0005) / 0.0005;
+			const co2Deaths = Math.round(this.resources.population * 0.1 * co2Excess);
 			if(co2Excess > 0) {
-				simMessages.push(`Unhealthy carbon dioxide levels on ${this.name}!`);
-				this.resources.population -= this.resources.population * 0.1 * co2Excess;
+				simMessages.push(`Unhealthy carbon dioxide levels on ${this.name} killed ${PlanetaryResources.popFormatter.format(co2Deaths)} this month`);
+				this.resources.population -= co2Deaths;
 			}
 			
 			// too many toxins reduce population slowly
-			this.resources.population -= this.resources.population * this.resources.toxins / 12;
+			const toxinDeaths = Math.round(this.resources.population * this.resources.toxins / 12);
+			if(this.resources.toxins > 0.02) {
+				simMessages.push(`Toxins on ${this.name} killed ${PlanetaryResources.popFormatter.format(toxinDeaths)} this month`);
+			}
+			this.resources.population -= toxinDeaths;
 			
 			// lack of water kills
 			if(this.resources.water === 0) {
@@ -139,7 +144,7 @@ class Planet {
 			this.resources.co2 += this.resources.population / 1000000000 * 0.0001 / 240; // increase by .01% per billion per 20 years
 			
 			// toxins
-			this.resources.toxins += this.resources.population / 1000000000 * 0.01 / 240;
+			this.resources.toxins += this.resources.population / 1000000000 * 0.01 / 120;
 		}
 		
 		/* !TODO: set launch button availability */
